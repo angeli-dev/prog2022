@@ -22,3 +22,5 @@ Naming
 Stack vs Heap
 
 Consistency in style
+
+Write small functions
