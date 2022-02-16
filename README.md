@@ -24,3 +24,5 @@ Stack vs Heap
 Consistency in style
 
 Write small functions
+
+Make it work, then make it good
