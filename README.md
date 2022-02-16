@@ -16,3 +16,9 @@ Use a debugger
 Use a formatting tool
 
 Use static analysers
+
+Naming
+
+Stack vs Heap
+
+Consistency in style
