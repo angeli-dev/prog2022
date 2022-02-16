@@ -9,11 +9,20 @@ int rand(int min, int max)
     return distribution(generator);
 }
 
+int get_int_from_user()
+{
+    int n;
+    while (!(std::cin >> n)) {
+        std::cin.clear(); // The user did not input a number so we need
+        std::cin.sync();  // to clear cin and try again
+        std::cout << "This is not a number, try again!\n";
+    }
+    return n;
+}
+
 int main()
 {
-    std::cout << rand(3, 11) << '\n';
-    std::cout << rand(3, 11) << '\n';
-    std::cout << rand(3, 11) << '\n';
-    std::cout << rand(3, 11) << '\n';
-    std::cout << rand(3, 11) << '\n';
+    std::cout << "Choose a number: " << '\n';
+    const int number = get_int_from_user();
+    std::cout << "Your number is " << number << "." << '\n';
 }
