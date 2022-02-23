@@ -42,4 +42,5 @@ Alternatively you can just create a *build* folder at the root of this project, 
 * Consistency in style
 * Write small functions
 * Make it work, then make it good
+* Prefer free functionss
 
