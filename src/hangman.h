@@ -1,6 +1,6 @@
+#pragma once
 #include <array>
 #include <iostream>
-#include "get_int_from_user.h"
 #include "random.h"
 
 const char* pick_a_random_word()

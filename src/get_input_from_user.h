@@ -2,7 +2,7 @@
 
 /// Blocks until the user inputs something of type T in the console, and then returns it
 template<typename T>
-T get_int_from_user()
+T get_input_from_user()
 {
     T n;
     while (!(std::cin >> n)) {

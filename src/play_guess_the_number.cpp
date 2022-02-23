@@ -1,5 +1,7 @@
+#include "play_guess_the_number.h"
 #include <iostream>
-#include "get_int_from_user.h"
+#include "get_input_from_user.h"
+#include "random.h"
 
 void play_guess_the_number()
 {
@@ -11,7 +13,7 @@ void play_guess_the_number()
     bool finished = false;
 
     while (!finished) {
-        const int player_number = get_int_from_user();
+        const int player_number = get_input_from_user<int>();
 
         if (player_number == program_number) {
             finished = true;
