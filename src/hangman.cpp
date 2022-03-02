@@ -59,4 +59,9 @@ bool word_contains(char letter, std::string_view word)
 
 void mark_as_guessed(char guessed_letter, std::vector<bool>& letters_guessed, std::string_view word_to_guess)
 {
+    size_t pos = 0;
+    while (word_to_guess.find(guessed_letter, pos) != std::string_view::npos) {
+        pos                  = word_to_guess.find(guessed_letter, pos);
+        letters_guessed[pos] = 1;
+    }
 }
