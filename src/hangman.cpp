@@ -65,3 +65,18 @@ void mark_as_guessed(char guessed_letter, std::vector<bool>& letters_guessed, st
         letters_guessed[pos] = 1;
     }
 }
+
+void remove_one_life(int& lives_count)
+{
+    lives_count--;
+}
+
+void show_congrats_message(std::string_view word_to_guess)
+{
+    std::cout << "Congratulations!" << std::endl;
+}
+
+void show_defeat_message()
+{
+    std::cout << "You're dead, bad guy!" << std::endl;
+}
