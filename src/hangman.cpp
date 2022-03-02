@@ -1,5 +1,6 @@
 #include <array>
 #include <iostream>
+#include <string_view>
 #include "algorithm"
 #include "random.h"
 
@@ -34,4 +35,28 @@ bool player_has_won(const std::vector<bool>& letters_guessed)
         return 1;
     }
     return 0;
+}
+
+void show_word_to_guess_with_missing_letters(const std::string& word, const std::vector<bool>& letters_guessed)
+{
+    for (size_t letter; letter < word.size(); letter++) {
+        if (letters_guessed[letter]) {
+            std::cout << letter;
+        }
+        else {
+            std::cout << "_";
+        }
+    }
+}
+
+bool word_contains(char letter, std::string_view word)
+{
+    if (word.find(letter) == std::string_view::npos) {
+        return 0;
+    }
+    return 1;
+}
+
+void mark_as_guessed(char guessed_letter, std::vector<bool>& letters_guessed, std::string_view word_to_guess)
+{
 }
