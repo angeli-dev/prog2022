@@ -1,6 +1,6 @@
+#include <assert.h>
 #include <array>
 #include <iostream>
-//#include <string_view>
 #include "algorithm"
 #include "get_input_from_user.h"
 #include "random.h"
@@ -8,10 +8,10 @@
 std::string pick_a_word_to_guess()
 {
     static std::vector<std::string> words = {
-        "code",
-        "crous",
-        "imac",
-        "opengl",
+        "mushroom",
+        "brioche",
+        "chocolate",
+        "turtle",
     };
     const size_t n = rand<size_t>(0, words.size() - 1);
     return words[n];
@@ -19,7 +19,7 @@ std::string pick_a_word_to_guess()
 
 void show_number_of_lives(const int number_of_lives)
 {
-    std::cout << "Nombre de vie : " << number_of_lives << std::endl;
+    std::cout << "Life : " << number_of_lives << std::endl;
 }
 
 bool player_is_alive(const int number_of_lives)
@@ -61,6 +61,7 @@ bool word_contains(const std::string letter, const std::string word)
 
 void mark_as_guessed(const std::string guessed_letter, std::vector<bool>& letters_guessed, const std::string word_to_guess)
 {
+    assert(word_to_guess.size() == letters_guessed.size());
     size_t pos = 0;
     std::cout << word_to_guess.find(guessed_letter, pos) << std::endl;
     while (word_to_guess.find(guessed_letter, pos) != std::string::npos) {

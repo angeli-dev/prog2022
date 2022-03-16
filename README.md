@@ -44,4 +44,6 @@ Alternatively you can just create a *build* folder at the root of this project, 
 * Make it work, then make it good
 * Prefer free functionss
 * std::string and std::string_view
+* Composition over Inheritance
+* Design cohesive classes
 
