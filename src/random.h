@@ -1,3 +1,4 @@
+#pragma once
 #include <random>
 
 /// Returns a random int between min (included) and max (included)

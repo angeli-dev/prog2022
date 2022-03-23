@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 
 /// Blocks until the user inputs something of type T in the console, and then returns it

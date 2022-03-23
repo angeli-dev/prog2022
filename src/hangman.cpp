@@ -1,3 +1,4 @@
+#include "hangman.h"
 #include <assert.h>
 #include <array>
 #include <iostream>
@@ -13,36 +14,36 @@ std::string pick_a_word_to_guess()
         "chocolate",
         "turtle",
     };
-    const size_t n = rand<size_t>(0, words.size() - 1);
+    const auto n = rand<size_t>(0, words.size() - 1);
     return words[n];
 }
 
-void show_number_of_lives(const int number_of_lives)
+void Hangman::show_number_of_lives()
 {
-    std::cout << "Life : " << number_of_lives << std::endl;
+    std::cout << "Life : " << _number_of_lives << std::endl;
 }
 
-bool player_is_alive(const int number_of_lives)
+bool Hangman::player_is_alive()
 {
-    if (number_of_lives <= 0) {
+    if (_number_of_lives <= 0) {
         return 0;
     }
     return 1;
 }
 
-bool player_has_won(const std::vector<bool>& letters_guessed)
+bool Hangman::player_has_won()
 {
-    if (std::all_of(letters_guessed.cbegin(), letters_guessed.cend(), [](int x) { return x == 1; })) {
+    if (std::all_of(_letters_guessed.cbegin(), _letters_guessed.cend(), [](int x) { return x == 1; })) {
         return 1;
     }
     return 0;
 }
 
-void show_word_to_guess_with_missing_letters(const std::string& word, const std::vector<bool>& letters_guessed)
+void Hangman::show_word_to_guess_with_missing_letters()
 {
-    for (size_t letter = 0; letter < word.size(); letter++) {
-        if (letters_guessed[letter]) {
-            std::cout << word[letter];
+    for (size_t letter = 0; letter < _word.size(); letter++) {
+        if (_letters_guessed[letter]) {
+            std::cout << _word[letter];
         }
         else {
             std::cout << "_";
@@ -51,35 +52,33 @@ void show_word_to_guess_with_missing_letters(const std::string& word, const std:
     std::cout << '\n';
 }
 
-bool word_contains(const std::string letter, const std::string word)
+bool Hangman::word_contains(const std::string letter)
 {
-    if (word.find(letter) == std::string::npos) {
+    if (_word.find(letter) == std::string::npos) {
         return 0;
     }
     return 1;
 }
 
-void mark_as_guessed(const std::string guessed_letter, std::vector<bool>& letters_guessed, const std::string word_to_guess)
+void Hangman::mark_as_guessed(const std::string guessed_letter)
 {
-    assert(word_to_guess.size() == letters_guessed.size());
     size_t pos = 0;
-    std::cout << word_to_guess.find(guessed_letter, pos) << std::endl;
-    while (word_to_guess.find(guessed_letter, pos) != std::string::npos) {
-        pos                  = word_to_guess.find(guessed_letter, pos);
-        letters_guessed[pos] = 1;
+    while (_word.find(guessed_letter, pos) != std::string::npos) {
+        pos                   = _word.find(guessed_letter, pos);
+        _letters_guessed[pos] = 1;
         pos++;
     }
 }
 
-void remove_one_life(int& lives_count)
+void Hangman::remove_one_life()
 {
-    lives_count--;
+    _number_of_lives--;
 }
 
-void show_congrats_message(const std::string word_to_guess)
+void Hangman::show_congrats_message()
 {
     std::cout << "Congratulations!" << std::endl;
-    std::cout << "The word was: " << word_to_guess << "!" << std::endl;
+    std::cout << "The word was: " << _word << "!" << std::endl;
 }
 
 void show_defeat_message()
@@ -89,23 +88,22 @@ void show_defeat_message()
 
 void play_hangman()
 {
-    int               number_of_lives = 10;
-    const std::string word            = pick_a_word_to_guess();
-    std::vector<bool> letters_guessed(word.size(), 0);
+    const std::string word = pick_a_word_to_guess();
+    Hangman           game(word);
 
-    while (player_is_alive(number_of_lives) && !player_has_won(letters_guessed)) {
-        show_number_of_lives(number_of_lives);
-        show_word_to_guess_with_missing_letters(word, letters_guessed);
+    while (game.player_is_alive() && !game.player_has_won()) {
+        game.show_number_of_lives();
+        game.show_word_to_guess_with_missing_letters();
         const auto guess = get_input_from_user<std::string>();
-        if (word_contains(guess, word)) {
-            mark_as_guessed(guess, letters_guessed, word);
+        if (game.word_contains(guess)) {
+            game.mark_as_guessed(guess);
         }
         else {
-            remove_one_life(number_of_lives);
+            game.remove_one_life();
         }
     }
-    if (player_has_won(letters_guessed)) {
-        show_congrats_message(word);
+    if (game.player_has_won()) {
+        game.show_congrats_message();
     }
     else {
         show_defeat_message();

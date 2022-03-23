@@ -13,7 +13,7 @@ void play_guess_the_number()
     bool finished = false;
 
     while (!finished) {
-        const int player_number = get_input_from_user<int>();
+        const auto player_number = get_input_from_user<int>();
 
         if (player_number == program_number) {
             finished = true;
