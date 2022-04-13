@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <iostream>
 #include "game.h"
 #include "get_input_from_user.h"
@@ -15,12 +18,12 @@ void show_the_list_of_commands(const std::map<char, Game> games)
     std::cout << "Press q to quit" << std::endl;
 }
 
-void read_pressed_key(const& char pressed_key, const std::map<char, Game> games)
+void read_pressed_key(const char pressed_key, std::map<char, Game> games)
 {
-    if (pressed_key == "q") {
+    if (pressed_key == 'q') {
         std::cout << "Bye bye no funny guy" << std::endl;
     }
-    if (games.count(pressed_key)) {
+    else if (games.count(pressed_key)) {
         games[pressed_key].function();
         show_the_list_of_commands(games);
         char new_pressed_key = get_input_from_user<char>();
@@ -53,5 +56,5 @@ void display_menu()
     std::cout << "What do you want to play today?" << std::endl;
     show_the_list_of_commands(games);
     char pressed_key = get_input_from_user<char>();
-    read_pressed_key(pressed_key, games)
+    read_pressed_key(pressed_key, games);
 }
