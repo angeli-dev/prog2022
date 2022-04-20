@@ -5,6 +5,7 @@
 #include "game.h"
 #include "get_input_from_user.h"
 #include "hangman.h"
+#include "noughts_and_crosses.h"
 #include "play_guess_the_number.h"
 
 void show_the_list_of_commands(const std::map<char, Game> games)
@@ -50,8 +51,13 @@ void display_menu()
     hangman.name     = "Hangman";
     hangman.function = play_hangman;
 
+    Game noughts_and_crosses;
+    noughts_and_crosses.name     = "Noughts and Crosses";
+    noughts_and_crosses.function = play_noughts_and_crosses;
+
     games['1'] = guess_the_number;
     games['2'] = hangman;
+    games['3'] = noughts_and_crosses;
 
     std::cout << "What do you want to play today?" << std::endl;
     show_the_list_of_commands(games);
