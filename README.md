@@ -46,4 +46,6 @@ Alternatively you can just create a *build* folder at the root of this project, 
 * std::string and std::string_view
 * Composition over Inheritance
 * Design cohesive classes
+* CMake
+* Git submodules
 
