@@ -7,6 +7,7 @@
 
 void draw_grid(p6::Context& ctx)
 {
+    ctx.stroke = p6::Color{1.f, 1.f, 1.f};
     ctx.line(glm::vec2{-0.333, 1}, glm::vec2{-0.333, -1});
     ctx.line(glm::vec2{0.333, 1}, glm::vec2{0.333, -1});
     ctx.line(glm::vec2{1, -0.333}, glm::vec2{-1, -0.333});
@@ -87,6 +88,20 @@ void draw_shape(p6::Context& ctx, const glm::vec2& position)
                p6::Radius{0.3f});
 }
 
+void draw_noughts_and_crosses(p6::Context& ctx, const std::vector<std::string>& vec, const Player& player1, const Player& player2)
+{
+    for (unsigned int i = 0; i < vec.size(); i++) {
+        if (vec[i] == player1.name) {
+            ctx.fill = player1.color;
+            draw_shape(ctx, convert_cell_index(i));
+        }
+        if (vec[i] == player2.name) {
+            ctx.fill = player2.color;
+            draw_shape(ctx, convert_cell_index(i));
+        }
+    }
+}
+
 Player change_current_player(const Player& current, const Player& player1, const Player& player2)
 {
     if (current.name == player1.name) {
@@ -152,51 +167,41 @@ void play_noughts_and_crosses()
     player2.name  = "blue";
     player2.color = p6::Color{0.f, 0.f, 1.f, 1.f};
 
-    Player       current_player = player1;
-    unsigned int turn           = 0;
-    unsigned int current_cell;
-
-    auto ctx = p6::Context{{720, 720, "Hello p6"}};
-
+    Player                   current_player = player1;
+    unsigned int             turn           = 0;
+    unsigned int             current_cell;
     std::vector<std::string> shapes(9);
 
-    ctx.fill = p6::Color{1.f, 1.f, 1.f, 1.f};
+    auto ctx = p6::Context{{720, 720, "Noughts and crosses"}};
 
     ctx.update = [&]() {
-        // fill background
         ctx.background({0.f, 0.f, 0.f});
-        ctx.stroke        = p6::Color{1.f, 1.f, 1.f};
         ctx.stroke_weight = 0.01f;
+
         draw_grid(ctx);
 
+        // hover case
         glm::vec2 hovered_cell_center = set_hovered_cell_center(ctx);
-
         if (!is_shape(hovered_cell_center, shapes)) {
             ctx.stroke = current_player.color;
             draw_square(ctx, hovered_cell_center);
         }
 
+        // add new shape
         ctx.mouse_pressed = [&](p6::MouseButton event) {
-            current_cell         = convert_cell_position(event.position);
-            shapes[current_cell] = current_player.name;
-            if (is_player_win(current_cell, shapes)) {
-                ctx.stop();
-                std::cout << current_player.name << " win!" << std::endl;
+            if (!is_shape(event.position, shapes)) {
+                current_cell         = convert_cell_position(event.position);
+                shapes[current_cell] = current_player.name;
+                if (is_player_win(current_cell, shapes)) {
+                    ctx.stop();
+                    std::cout << current_player.name << " win!" << std::endl;
+                }
+                current_player = change_current_player(current_player, player1, player2);
+                turn++;
             }
-            current_player = change_current_player(current_player, player1, player2);
-            turn++;
         };
 
-        for (unsigned int i = 0; i < shapes.size(); i++) {
-            if (shapes[i] == player1.name) {
-                ctx.fill = player1.color;
-                draw_shape(ctx, convert_cell_index(i));
-            }
-            if (shapes[i] == player2.name) {
-                ctx.fill = player2.color;
-                draw_shape(ctx, convert_cell_index(i));
-            }
-        }
+        draw_noughts_and_crosses(ctx, shapes, player1, player2);
 
         if (is_end(turn)) {
             std::cout << "You are all winers!" << std::endl;
