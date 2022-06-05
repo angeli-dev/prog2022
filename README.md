@@ -55,4 +55,5 @@ Alternatively you can just create a *build* folder at the root of this project, 
 * std::vector
 * Minimize dependencies
 * Strong Types
+* Polymorphism
 
