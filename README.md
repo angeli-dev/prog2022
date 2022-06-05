@@ -48,4 +48,5 @@ Alternatively you can just create a *build* folder at the root of this project, 
 * Design cohesive classes
 * CMake
 * Git submodules
+* Split problems in small pieces
 
