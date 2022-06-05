@@ -53,4 +53,5 @@ Alternatively you can just create a *build* folder at the root of this project, 
 * DRY: Don't repeat yourself
 * Use structs to group data
 * std::vector
+* Minimize dependencies
 
